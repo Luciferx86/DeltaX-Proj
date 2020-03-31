@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".View.UI.AddSongActivity">
+
+    <TextView
+        android:id="@+id/songNameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Song Name"
+        android:textSize="20dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="50dp"
+        tools:layout_editor_absoluteX="86dp"
+        tools:layout_editor_absoluteY="102dp" />
+
+    <EditText
+        android:id="@+id/songName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Marshal Mathers"
+        app:layout_constraintTop_toBottomOf="@id/songNameText"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="30dp" />
+
+    <TextView
+        android:id="@+id/releaseDateText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Release Date"
+        android:textSize="20dp"
+        app:layout_constraintTop_toBottomOf="@id/songName"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="80dp"
+        android:layout_marginLeft="50dp"
+        tools:layout_editor_absoluteX="92dp"
+        tools:layout_editor_absoluteY="237dp" />
+
+    <EditText
+        android:id="@+id/releaseDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="27/03/1997"
+        android:inputType="datetime"
+        app:layout_constraintTop_toBottomOf="@id/releaseDateText"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="30dp" />
+
+    <TextView
+        android:id="@+id/artistNameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Artists:"
+        android:textSize="20dp"
+        app:layout_constraintTop_toBottomOf="@id/releaseDate"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="80dp"
+        android:layout_marginLeft="50dp"
+        tools:layout_editor_absoluteX="99dp"
+        tools:layout_editor_absoluteY="390dp" />
+
+    <ImageButton
+        android:id="@+id/addArtistBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/releaseDate"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="80dp"
+        android:layout_marginTop="80dp"
+        android:background="#ffffff"
+        android:src="@drawable/ic_plus_icon"/>
+
+    <Spinner
+        android:id="@+id/artistSpinner"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/artistNameText"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:spinnerMode="dropdown"
+        android:layout_marginTop="30dp" />
+    <Button
+        android:id="@+id/addSong"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/artistSpinner"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="50dp"
+        android:text="Add Song"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
