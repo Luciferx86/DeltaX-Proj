@@ -8,6 +8,8 @@ import com.example.top10music.View.UI.SongsFragment
 
 
 class TabsPagerAdapter(fm: FragmentManager?) : FragmentPagerAdapter(fm) {
+
+    //Adapter for ViewPager on MainActivity
     override fun getItem(position: Int): Fragment {
         var fragment: Fragment
         if (position == 0) {

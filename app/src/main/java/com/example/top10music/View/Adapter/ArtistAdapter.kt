@@ -17,6 +17,9 @@ class ArtistAdapter(
     context: FragmentActivity?
 ) :
     RecyclerView.Adapter<ArtistAdapter.ArtistViewHolder>() {
+
+    //Adapter for Artists RecyclerView
+
     private val artists: List<Artist> = artists
     private val context: Context? = context
 
@@ -45,21 +48,13 @@ class ArtistAdapter(
         holder.artistName.text = artists[position].artistName
         holder.artistDOB.text = artists[position].artistDOB
         holder.allSongs.text = getAllSongs(artists[position].sungSongs)
-//        holder.itemView.setOnClickListener(object : OnClickListener() {
-//            fun onClick(view: View?) { //use position value  to get clicked data from list
-//                Log.d("Clicked", cities[position].getName())
-//                val i = Intent(context, CityDetailsActivity::class.java)
-//                i.putExtra("city", cities[position].getName())
-//                i.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-//                mContext.startActivity(i)
-//            }
-//        })
     }
 
     override fun getItemCount(): Int {
         return artists.size
     }
 
+    //function to get all songs as String
     fun getAllSongs(allSongs: ArrayList<String>) : String {
         var x = ""
         for(i in  allSongs){

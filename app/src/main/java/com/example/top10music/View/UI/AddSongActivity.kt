@@ -1,8 +1,8 @@
 package com.example.top10music.View.UI
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -13,7 +13,6 @@ import com.example.top10music.Model.SongToAdd
 import com.example.top10music.R
 import com.example.top10music.View.Adapter.SpinnerAdapter
 import kotlinx.android.synthetic.main.activity_add_song.*
-import kotlinx.android.synthetic.main.activity_add_song.addSong
 import kotlinx.android.synthetic.main.add_artist_dialog_layout.*
 
 
@@ -24,15 +23,17 @@ class AddSongActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_song)
 
-        observeArtistData()
+        //fetching all stored artists from API
+        getAllArtists()
 
         addArtistBtn.setOnClickListener {
-            var dialog = AddArtistDialog(this);
+
+            //showing new dialog for adding new Artist
+            val dialog = AddArtistDialog(this);
             dialog.show()
 
             dialog.dialogAddArtistBtn.setOnClickListener {
                 val artist = dialog.getArtistToAdd()
-
                 val model: ArtistViewModel = ViewModelProviders.of(this).get<ArtistViewModel>(
                     ArtistViewModel::class.java
                 )
@@ -40,6 +41,8 @@ class AddSongActivity : AppCompatActivity() {
                     Log.d("GotResponse", it.toString())
                     val addedArtist = it
                     if (addedArtist != null) {
+
+                        //Artist added successfully
                         Log.d("AddedArtist", "${addedArtist.toString()} added successfully")
                         dialog.hide()
                     } else {
@@ -59,21 +62,26 @@ class AddSongActivity : AppCompatActivity() {
             val artists = adapter.selectedArtists
 
             if (songName.length > 4 && releaseDate.length > 5 && artists.size > 0) {
-                observeAddSongsData(SongToAdd(songName, releaseDate, imageURL, artists))
+                addSongToApi(SongToAdd(songName, releaseDate, imageURL, artists))
             } else {
-                if (songName.length <= 4) {
-                    Toast.makeText(this, "Name should be more than 4 chars", Toast.LENGTH_LONG)
-                        .show()
-                } else if (releaseDate.length <= 5) {
-                    Toast.makeText(this, "Invalid Date", Toast.LENGTH_LONG).show()
-                } else {
-                    Toast.makeText(this, "No Artist Selected", Toast.LENGTH_LONG).show()
+                when {
+                    songName.length <= 4 -> {
+                        Toast.makeText(this, "Name should be more than 4 chars", Toast.LENGTH_LONG)
+                            .show()
+                    }
+                    releaseDate.length <= 5 -> {
+                        Toast.makeText(this, "Invalid Date", Toast.LENGTH_LONG).show()
+                    }
+                    else -> {
+                        Toast.makeText(this, "No Artist Selected", Toast.LENGTH_LONG).show()
+                    }
                 }
             }
         }
     }
 
-    fun observeAddSongsData(song: SongToAdd) {
+    //function to add new song to API
+    private fun addSongToApi(song: SongToAdd) {
         val model: SongViewModel = ViewModelProviders.of(this).get<SongViewModel>(
             SongViewModel::class.java
         )
@@ -82,6 +90,9 @@ class AddSongActivity : AppCompatActivity() {
             val addedSong = it
             if (addedSong != null) {
                 Log.d("AddedSong", "${addedSong.toString()} added successfully")
+                val intent = Intent()
+                intent.putExtra("MESSAGE", "This is a message")
+                setResult(2,intent)
                 finish()
             } else {
                 Log.d("Cities", "no cities found")
@@ -89,7 +100,8 @@ class AddSongActivity : AppCompatActivity() {
         })
     }
 
-    fun observeArtistData() {
+    //function to get all existing Artists from API
+    private fun getAllArtists() {
         val model: ArtistViewModel = ViewModelProviders.of(this).get<ArtistViewModel>(
             ArtistViewModel::class.java
         )
@@ -110,5 +122,13 @@ class AddSongActivity : AppCompatActivity() {
                 Log.d("Cities", "no cities found")
             }
         })
+    }
+
+
+    override fun onBackPressed() {
+        val intent = Intent()
+        intent.putExtra("MESSAGE", "This is a message")
+        setResult(4, intent)
+        super.onBackPressed()
     }
 }

@@ -15,7 +15,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class ArtistViewModel : ViewModel() {
-    private val BaseUrl = "https://heroku-song.herokuapp.com/"
+    private val BASE_URL = "https://heroku-song.herokuapp.com/"
     private var artistResponseLive: MutableLiveData<ArrayList<Artist>?>? = null
     private var addArtistResponseLive: MutableLiveData<Artist>? = null
     fun getArtists(): MutableLiveData<ArrayList<Artist>?>? {
@@ -29,7 +29,7 @@ class ArtistViewModel : ViewModel() {
 
     fun loadArtists() {
         val retrofit = Retrofit.Builder()
-            .baseUrl(BaseUrl)
+            .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         val service = retrofit.create(RestApi::class.java)
@@ -72,7 +72,7 @@ class ArtistViewModel : ViewModel() {
 
     fun addArtistCall(artist: ArtistToAdd){
         val retrofit = Retrofit.Builder()
-            .baseUrl(BaseUrl)
+            .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         val service = retrofit.create(RestApi::class.java)

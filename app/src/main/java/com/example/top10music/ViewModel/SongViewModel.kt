@@ -14,20 +14,13 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class SongViewModel : ViewModel() {
-    private val BaseUrl = "https://heroku-song.herokuapp.com/"
+    private val BASE_URL = "https://heroku-song.herokuapp.com/"
     private var songResponseLive: MutableLiveData<ArrayList<Song>?>? = null
     private var addSongResponseLive: MutableLiveData<Song>? = null
     private var rateSongResponseLive: MutableLiveData<SongRating>? = null
-    fun getSongs(): MutableLiveData<ArrayList<Song>?>? {
-        if (songResponseLive == null) {
-            songResponseLive = MutableLiveData<ArrayList<Song>?>()
-            loadSongs()
-        }
-        //finally we will return the list
-        return songResponseLive
-    }
 
-    fun addSong(song: SongToAdd): MutableLiveData<Song>?{
+
+    fun addSong(song: SongToAdd): MutableLiveData<Song>? {
         if (addSongResponseLive == null) {
             addSongResponseLive = MutableLiveData<Song>()
             addSongCall(song)
@@ -36,9 +29,9 @@ class SongViewModel : ViewModel() {
         return addSongResponseLive
     }
 
-    fun addSongCall(song: SongToAdd){
+    fun addSongCall(song: SongToAdd) {
         val retrofit = Retrofit.Builder()
-            .baseUrl(BaseUrl)
+            .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         val service = retrofit.create(RestApi::class.java)
@@ -70,9 +63,16 @@ class SongViewModel : ViewModel() {
         })
     }
 
+    fun getSongs(): MutableLiveData<ArrayList<Song>?>? {
+        songResponseLive = MutableLiveData()
+        loadSongs()
+        //finally we will return the list
+        return songResponseLive
+    }
+
     fun loadSongs() {
         val retrofit = Retrofit.Builder()
-            .baseUrl(BaseUrl)
+            .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         val service = retrofit.create(RestApi::class.java)
@@ -98,22 +98,22 @@ class SongViewModel : ViewModel() {
             override fun onFailure(
                 call: Call<ArrayList<Song>?>,
                 t: Throwable
-            ) { //                weatherData.setText(t.getMessage());
+            ) {
                 Log.d("Temperature", t.message)
             }
         })
     }
 
-    fun rateSong(rating: SongRating): MutableLiveData<SongRating>?{
-            rateSongResponseLive = MutableLiveData<SongRating>()
-            rateSongCall(rating)
+    fun rateSong(rating: SongRating): MutableLiveData<SongRating>? {
+        rateSongResponseLive = MutableLiveData<SongRating>()
+        rateSongCall(rating)
         //finally we will return the list
         return rateSongResponseLive
     }
 
-    fun rateSongCall(rating: SongRating){
+    fun rateSongCall(rating: SongRating) {
         val retrofit = Retrofit.Builder()
-            .baseUrl(BaseUrl)
+            .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         val service = retrofit.create(RestApi::class.java)

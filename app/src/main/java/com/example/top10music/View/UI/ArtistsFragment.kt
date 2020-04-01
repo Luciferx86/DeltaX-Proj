@@ -24,12 +24,14 @@ class ArtistsFragment : Fragment() {
     ): View {
         val view: View = inflater.inflate(R.layout.artists_fragment, container, false)
         artistRecycler = view.findViewById(R.id.artistRecycler) as RecyclerView
+
+        //fetch artists from API
         observeArtistData()
         return view
     }
 
-
-    fun observeArtistData() {
+    //function to get all artists from API
+    private fun observeArtistData() {
         val model: ArtistViewModel = ViewModelProviders.of(this).get<ArtistViewModel>(
             ArtistViewModel::class.java
         )

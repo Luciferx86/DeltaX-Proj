@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.spinner_item.view.*
 
 class SpinnerAdapter(val context: Context, var listItemsTxt: ArrayList<String>) : BaseAdapter() {
 
+    //Adapter for spinner for all available artists when adding a new song
 
     val mInflater: LayoutInflater = LayoutInflater.from(context)
 

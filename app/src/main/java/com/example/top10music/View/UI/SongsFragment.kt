@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -28,29 +29,49 @@ class SongsFragment : Fragment() {
         val view: View = inflater.inflate(R.layout.songs_fragment, container, false)
         songsRecycler = view.findViewById(R.id.songsRecycler) as RecyclerView
         view.addSong.setOnClickListener {
-            var i : Intent = Intent(context,AddSongActivity::class.java)
-            startActivity(i);
+            val i: Intent = Intent(context, AddSongActivity::class.java)
+            this.startActivityForResult(i, 2)
         }
+
+        //fetching songs from API
         observeSongsData()
         return view
     }
 
-        fun observeSongsData() {
-            val model: SongViewModel = ViewModelProviders.of(this).get<SongViewModel>(
-                SongViewModel::class.java
-            )
-            model.getSongs()?.observe(this, Observer<ArrayList<Song>?> {
-                Log.d("GotResponse", it.toString())
-                val songs = it
-                if (songs != null) {
-                    songsRecycler?.layoutManager = LinearLayoutManager(context)
-                    songsRecycler?.adapter = SongAdapter(
-                        songs,
-                        this.activity
-                    )
-                } else {
-                    Log.d("Cities", "no cities found")
-                }
-            })
+    //function to get all songs stored in DB
+    private fun observeSongsData() {
+        val model: SongViewModel = ViewModelProviders.of(this).get<SongViewModel>(
+            SongViewModel::class.java
+        )
+        model.getSongs()?.observe(this, Observer<ArrayList<Song>?> {
+            Log.d("GotResponse", it.toString())
+            val songs = it
+            if (songs != null) {
+                Log.d("ActivityResult", "got Result")
+                songsRecycler?.layoutManager = LinearLayoutManager(context)
+                songsRecycler?.adapter = SongAdapter(
+                    songs,
+                    this.activity
+                )
+            } else {
+                Log.d("Cities", "no cities found")
+            }
+        })
+    }
+
+    override fun onActivityResult(
+        requestCode: Int,
+        resultCode: Int,
+        data: Intent
+    ) {
+        super.onActivityResult(requestCode, resultCode, data)
+        // check if the request code is same as what is passed  here it is 2
+        Log.d("ActivityResult", resultCode.toString())
+        if (resultCode == 2) {
+            //refreshing list after adding song
+            observeSongsData()
+        } else if (resultCode == 4) {
+            Toast.makeText(context, "Failed to add song", Toast.LENGTH_SHORT).show()
         }
+    }
 }
