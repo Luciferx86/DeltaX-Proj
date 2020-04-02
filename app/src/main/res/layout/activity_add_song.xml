@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:hint="Marshal Mathers"
+        android:hint="Blinding Lights"
         app:layout_constraintTop_toBottomOf="@id/songNameText"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
