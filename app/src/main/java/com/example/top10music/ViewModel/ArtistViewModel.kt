@@ -19,10 +19,8 @@ class ArtistViewModel : ViewModel() {
     private var artistResponseLive: MutableLiveData<ArrayList<Artist>?>? = null
     private var addArtistResponseLive: MutableLiveData<Artist>? = null
     fun getArtists(): MutableLiveData<ArrayList<Artist>?>? {
-        if (artistResponseLive == null) {
             artistResponseLive = MutableLiveData()
             loadArtists()
-        }
         //finally we will return the list
         return artistResponseLive
     }

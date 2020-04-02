@@ -69,6 +69,7 @@ class SongsFragment : Fragment() {
         Log.d("ActivityResult", resultCode.toString())
         if (resultCode == 2) {
             //refreshing list after adding song
+            Toast.makeText(context,"Song Added Successfully",Toast.LENGTH_SHORT).show()
             observeSongsData()
         } else if (resultCode == 4) {
             Toast.makeText(context, "Failed to add song", Toast.LENGTH_SHORT).show()

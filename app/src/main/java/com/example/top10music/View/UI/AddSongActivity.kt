@@ -3,6 +3,7 @@ package com.example.top10music.View.UI
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -14,6 +15,7 @@ import com.example.top10music.R
 import com.example.top10music.View.Adapter.SpinnerAdapter
 import kotlinx.android.synthetic.main.activity_add_song.*
 import kotlinx.android.synthetic.main.add_artist_dialog_layout.*
+import kotlinx.android.synthetic.main.single_artist_item.*
 
 
 class AddSongActivity : AppCompatActivity() {
@@ -33,6 +35,14 @@ class AddSongActivity : AppCompatActivity() {
             dialog.show()
 
             dialog.dialogAddArtistBtn.setOnClickListener {
+                dialog.dialogNameHeading.visibility = View.GONE
+                dialog.dialogArtistName.visibility = View.GONE
+                dialog.dialogDobHeading.visibility = View.GONE
+                dialog.dialogDOB.visibility = View.GONE
+                dialog.dialogBioHeading.visibility = View.GONE
+                dialog.dialogBio.visibility = View.GONE
+                dialog.dialogAddArtistBtn.visibility = View.GONE
+                dialog.dialogProgressLayout.visibility = View.VISIBLE
                 val artist = dialog.getArtistToAdd()
                 val model: ArtistViewModel = ViewModelProviders.of(this).get<ArtistViewModel>(
                     ArtistViewModel::class.java
@@ -44,12 +54,21 @@ class AddSongActivity : AppCompatActivity() {
 
                         //Artist added successfully
                         Log.d("AddedArtist", "${addedArtist.toString()} added successfully")
+                        Toast.makeText(this,"Artist Added Successfully",Toast.LENGTH_SHORT).show()
+                        this.getAllArtists()
                         dialog.hide()
                     } else {
+                        dialog.dialogNameHeading.visibility = View.VISIBLE
+                        dialog.dialogArtistName.visibility = View.VISIBLE
+                        dialog.dialogDobHeading.visibility = View.VISIBLE
+                        dialog.dialogDOB.visibility = View.VISIBLE
+                        dialog.dialogBioHeading.visibility = View.VISIBLE
+                        dialog.dialogBio.visibility = View.VISIBLE
+                        dialog.dialogAddArtistBtn.visibility = View.VISIBLE
+                        dialog.dialogProgressLayout.visibility = View.GONE
                         Log.d("Cities", "no cities found")
                     }
                 })
-                Log.d("DialogBtn", artist.toString())
             }
 
         }
